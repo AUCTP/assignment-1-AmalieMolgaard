@@ -37,9 +37,6 @@ def simulate_customers(customerNumber): #defines a function that takes one param
     
     return sales #after all customers have been processed, the function returns the list of all successful sales
 
-#run simulation
-sales_today = simulate_customers(10)
-
 #Task 3: process sales and total revenue
 def process_sales(sales):
     total_revenue = 0 #starts with zero income
@@ -68,19 +65,38 @@ generate_report(sales_today) #generates the daily sales report
 # Task 5: Calculate the cost of leftover items
 def leftover_inventory():
     total_cost = 0  # start from zero cost
-
     for i in range(len(items)):  # loop through all items by index
-        leftover = inventories[i]              # how many are left
-        cost_per_item = prices[i] / 2          # production cost is half the price
+        leftover = inventories[i]  # how many are left
+        cost_per_item = prices[i] / 2  # production cost is half the price
         total_cost += leftover * cost_per_item # add cost for this item
 
     return total_cost
-
 # calculate leftover costs
 total_cost = leftover_inventory()
 print(f"Total cost of leftover items: {total_cost}")
+#Find the revenue
+newRevenue = total_revenue - total_cost
 
+#update of the sales report including leftover inventory 
+def generate_report(sales): 
+    print("\n DAILY SALES REPORT ")
+    total_revenue = process_sales(sales) 
+    leftover_cost = leftover_inventory()
+    profit = total_revenue - leftover_cost
+ 
+  #prints sold items and stock
+    for i in range(len(items)): #go through all items
+        sold_count = sales.count(items[i]) #count how many times the item was sold
+        print(f"{items[i]}: sold {sold_count}, remaining stock: {inventories[i]}")
+    
+  #print totals for the day
+    print(f"\nTotal revenue: {total_revenue}")
+    print(f"Cost of leftover inventory: {leftover_cost}")
+    print("Profit for the day: {profit}")
 
+# Run the simulation
+sales_today = simulate_customers(10) #ssimulates 10 customers visiting the cafeteriaa 
+generate_report(sales_today) #generates the daily sales report
 
 
 
